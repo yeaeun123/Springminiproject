@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="phonebook">
+	<!-- 게시물 작성 -->
+	<insert id="insert" parameterType="PhonebookVo">
+	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+		SELECT seq_phone_book_pk.nextval FROM dual
+	</selectKey>
+		<![CDATA[
+		INSERT INTO phone_book (id, name, hp, tel) 
+		 VALUES(#{id}, #{name}, #{hp}, #{tel})
+		]]>
+	</insert>
+	
+	<!-- 목록 -->
+	<select id="selectAll" resultType="PhonebookVo">
+		SELECT * FROM phone_book
+	</select>
+	
+	<!-- 게시물 읽기(조회) -->
+	<select id="getTel" parameterType="long" resultType="PhonebookVo">
+		SELECT * FROM phone_book
+	</select>
+	
+	
+	
+	<!-- 게시물 수정 -->
+	<update id="update" parameterType="PhonebookVo">
+		UPDATE phone_book
+		SET name=#{name},hp=#{hp}, tel=#{tel} 
+		WHERE id=#{id}
+	</update>
+	
+	<!-- 게시물 삭제 -->
+	<delete id="deleteByUserNo" parameterType="map" >
+		DELETE FROM phone_book 
+		WHERE id = #{id}
+	</delete>	
+	
+</mapper>
